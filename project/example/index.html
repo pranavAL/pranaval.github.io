@@ -1,0 +1,1274 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  
+  
+  <meta name="generator" content="Wowchemy 5.0.0-beta.1 for Hugo">
+  
+
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Pranav Agarwal">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Monte Carlo Tree Search to play Connect 4">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://pranaval.github.io/project/example/">
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#3f51b5">
+  
+
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.0/css/academicons.min.css" integrity="sha512-W4yqoT1+8NLkinBLBZko+dFB2ZbHsYLDdr50VElllRcNt2Q4/GSs6u71UHKxB7S6JEMCp5Ve4xjh3eGQl/HRvg==" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js" integrity="sha512-TmDwFLhg3UA4ZG0Eb4MIyT1O1Mb+Oww5kFG0uHqXsdbyZz9DcvYQhKpGgNkamAI6h2lGGZq2X8ftOJvF/XjTUg==" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+    
+      
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather%7CRoboto+Mono&display=swap">
+    
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.min.ba60aaa7335167225281220fc2aad2c8.css">
+
+  
+
+
+
+
+  
+
+  
+
+
+  
+  
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu2a925f5c00d128def27a1ee15bbb14f6_4283_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu2a925f5c00d128def27a1ee15bbb14f6_4283_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="https://pranaval.github.io/project/example/">
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="og:site_name" content="Pranav Agarwal">
+  <meta property="og:url" content="https://pranaval.github.io/project/example/">
+  <meta property="og:title" content="Game AI: Learning to play Connect 4 using Monte Carlo Tree Search | Pranav Agarwal">
+  <meta property="og:description" content="Monte Carlo Tree Search to play Connect 4"><meta property="og:image" content="https://pranaval.github.io/images/icon_hu2a925f5c00d128def27a1ee15bbb14f6_4283_512x512_fill_lanczos_center_2.png">
+  <meta property="twitter:image" content="https://pranaval.github.io/images/icon_hu2a925f5c00d128def27a1ee15bbb14f6_4283_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2020-11-01T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2020-11-01T00:00:00&#43;00:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://pranaval.github.io/project/example/"
+  },
+  "headline": "Game AI: Learning to play Connect 4 using Monte Carlo Tree Search",
+  
+  "datePublished": "2020-11-01T00:00:00Z",
+  "dateModified": "2020-11-01T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Pranav Agarwal"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Pranav Agarwal",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://pranaval.github.io/images/icon_hu2a925f5c00d128def27a1ee15bbb14f6_4283_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "Monte Carlo Tree Search to play Connect 4"
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Game AI: Learning to play Connect 4 using Monte Carlo Tree Search | Pranav Agarwal</title>
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper  ">
+
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.js"></script>
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  <div class="page-header">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Pranav Agarwal</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Pranav Agarwal</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-end" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>Home</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#publications"><span>Publications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#blogs"><span>Blogs</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      
+
+      
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  </div>
+
+  <div class="page-body">
+    <article class="article article-project">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Game AI: Learning to play Connect 4 using Monte Carlo Tree Search</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Nov 1, 2020
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+  
+  
+  <span class="middot-divider"></span>
+  <a href="/project/example/#disqus_thread"></a>
+  
+
+  
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="btn-links mb-3">
+  
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  
+  
+    
+  
+  <a class="btn btn-outline-primary my-1 mr-1" href="https://twitter.com/Pranav_AL" target="_blank" rel="noopener">
+    <i class="fab fa-twitter mr-1"></i>
+    Follow
+  </a>
+
+  
+  
+  
+    
+  
+  
+  
+  
+  
+    
+  
+  <a class="btn btn-outline-primary my-1 mr-1" href="https://colab.research.google.com/drive/1b6ikDpfggh_QeIKtDoqt-4DtJc0eeLk2?usp=sharing" target="_blank" rel="noopener">
+    <i class="fab fa-Colab mr-1"></i>
+    Code
+  </a>
+
+  
+  
+  
+    
+  
+  
+  
+  
+  
+    
+  
+  <a class="btn btn-outline-primary my-1 mr-1" href="https://pranav-agarwal-2109.medium.com/game-ai-learning-to-play-connect-4-using-monte-carlo-tree-search-f083d7da451e" target="_blank" rel="noopener">
+    <i class="fab fa-medium "></i>
+    
+  </a>
+
+
+</div>
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <h2 id="game-ai"><strong>Game AI</strong></h2>
+<p>Game AI is one of the most promising research areas which involves teaching an AI agent to learn to play a complex game. Recently there have been many exciting works like <a href="https://deepmind.com/research/case-studies/alphago-the-story-so-far" target="_blank" rel="noopener">AlphaGO</a> by DeepMind and <a href="https://www.vox.com/future-perfect/2019/9/20/20872672/ai-learn-play-hide-and-seek" target="_blank" rel="noopener">learning to play Hide and Seek by OpenAI</a>. The game environment provides many complex scenarios to test several algorithms which can then be adapted to real-life important applications like autonomous driving and robotics.</p>
+<p><img src="1.gif" alt=""></p>
+<p>In this article find my approach to let an AI agent learn to play Connect 4. Though simple for humans, large action space and several permutations and combinations of different board states prove to be challenging for an AI agent to learn to win. I used a Monte Carlo Tree Search approach to solve this problem and I am happy to share that I landed up in the top 30% among all the participants (my first Kaggle competition).</p>
+<h2 id="about-connect-4"><strong>About Connect 4</strong></h2>
+<p><em>Connect 4</em> is a turn-based game where two players drop colored discs into a vertical grid alternatively. The aim of each player is to form a <strong>sequence of four discs</strong> in a row before its opponent. This is a <strong>perfect information game</strong>, meaning each player is well informed of all the events that have previously occurred.</p>
+<p><img src="3.gif" alt=""></p>
+<p>Alternatively, Connect 4 can also be considered as a <strong>zero-sum</strong> game meaning there is no mutual win or loss.</p>
+<h2 id="kaggle-environment-to-load-connectx"><strong>Kaggle environment to load ConnectX</strong></h2>
+<ul>
+<li>
+<p>Kaggle provides an amazingly easy to use OpenAI like gym environment for the Connect 4 game.</p>
+</li>
+<li>
+<p>In order to final test your agent, you can also use predefined <strong>random</strong> and <strong>negamax</strong> agents.</p>
+</li>
+</ul>
+<h2 id="different-approach-to-solve-the-problem"><strong>Different Approach to solve the problem</strong></h2>
+<p>There can be many different algorithms to solve this problem like</p>
+<ul>
+<li>Minimax</li>
+<li>Minimax with alpha-beta pruning</li>
+<li>Q Learning</li>
+<li>Proximal Policy Algorithm</li>
+<li>Monte Carlo Tree Search</li>
+<li>and many more</li>
+</ul>
+<p>I preferred using the Monte Carlo Tree Search algorithm because of its flexibility to solve games with large branching factors. The main bottleneck for games involving large action space (7 in case of connect4) is that requires it requires an extensive search considering the different permutation and combination of the given board. MCTS tries to overcome this problem in an efficient way as explained below by reducing the search space while at the same time maintaining efficiency.</p>
+<h2 id="monte-carlo-tree-search-theory"><strong>Monte Carlo Tree Search: Theory</strong></h2>
+<p><strong>Idea</strong>: Monte Carlo Tree Search builds a search tree with n nodes with each node annotated with the <strong>win count</strong> and the <strong>visit count</strong>. Initially, the tree starts with a single root node and performs iterations as long as resources are not exhausted.</p>
+<ul>
+<li><strong>Initial Setup</strong> — Start with a single root (parent) node and assign a large random UCB value to each non visited (child) nodes.</li>
+</ul>
+<p>MCTS consists of four main steps</p>
+<p><img src="4.png" alt=""></p>
+<ul>
+<li><strong>Selection</strong> — In this phase, the agent starts at the root node, selects the most urgent node, apply the chosen actions, and continue till the terminal state is reached. To select the most urgent node upper confidence bound of the nodes is used. The node with the maximum UCB is used as the next node. The UCB process helps overcome <strong>exploration</strong> and <strong>exploitation</strong> dilemma. Also well known as a Multi-Armed bandit problem where the agent wants to maximize one’s gains while playing (Lifelong Learning).</li>
+</ul>
+<p><img src="5.png" alt="">
+<img src="6.png" alt=""></p>
+<ul>
+<li>
+<p><strong>Expansion</strong> — When UCB can no longer be applied to find the next node, the game tree is expanded further to include an unexplored child by appending all possible nodes from the leaf node</p>
+</li>
+<li>
+<p><strong>Simulation</strong> — Once expanded the algorithm selects the child node either randomly or with a policy until it reaches the final stage of the game</p>
+</li>
+<li>
+<p><strong>Backpropagation</strong> — When the agent reaches the final state of the game with a winner, all the traversed nodes are updated. The visit and win score for each node is updated.</p>
+</li>
+</ul>
+<p>The above steps are repeated for some iterations.</p>
+<ul>
+<li>Finally, the child of the root node with the highest number of visits is selected as the next action as more the number of visits higher is the UCB.</li>
+</ul>
+<h2 id="mcts-summary"><strong>MCTS Summary</strong></h2>
+<ul>
+<li>Each iteration starts at the root.</li>
+<li>Follows tree policy to reach a leaf node.</li>
+<li>Node N is added.</li>
+<li>Perform a random rollout.</li>
+<li>Value backpropagated up the tree.</li>
+</ul>
+<h2 id="other-common-approaches"><strong>Other common approaches</strong></h2>
+<p>Another common approach Minimax with alpha-beta pruning.</p>
+<p><strong>Idea</strong> — If beta’s (minimizing player) maximum score becomes less than the minimum score of the maximizing player(alpha), the maximizing player is not required to consider other nodes.</p>
+<p>Works well only when:</p>
+<ul>
+<li>A good heuristic value function is known</li>
+<li>The branching factor is modest.</li>
+</ul>
+<h2 id="implement-mcts-to-play-connect-4"><strong>Implement MCTS to play Connect 4</strong></h2>
+<p>Check out my implementation of Monte Carlo Tree Search to play Connect 4 to rank in the top 30% of this <a href="https://www.kaggle.com/c/connectx" target="_blank" rel="noopener">Kaggle Competition</a> in this <a href="https://colab.research.google.com/drive/1b6ikDpfggh_QeIKtDoqt-4DtJc0eeLk2?usp=sharing" target="_blank" rel="noopener">Colab Notebook</a>.</p>
+<p><img src="2.gif" alt=""></p>
+
+    </div>
+
+    
+
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tag/deep-learning/">Deep Learning</a>
+  
+  <a class="badge badge-light" href="/tag/monte-carlo-tree-search/">Monte Carlo Tree Search</a>
+  
+  <a class="badge badge-light" href="/tag/reinforcement-learning/">Reinforcement Learning</a>
+  
+  <a class="badge badge-light" href="/tag/game-ai/">Game AI</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://pranaval.github.io/project/example/&amp;text=Game%20AI:%20Learning%20to%20play%20Connect%204%20using%20Monte%20Carlo%20Tree%20Search" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://pranaval.github.io/project/example/&amp;t=Game%20AI:%20Learning%20to%20play%20Connect%204%20using%20Monte%20Carlo%20Tree%20Search" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Game%20AI:%20Learning%20to%20play%20Connect%204%20using%20Monte%20Carlo%20Tree%20Search&amp;body=https://pranaval.github.io/project/example/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://pranaval.github.io/project/example/&amp;title=Game%20AI:%20Learning%20to%20play%20Connect%204%20using%20Monte%20Carlo%20Tree%20Search" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=Game%20AI:%20Learning%20to%20play%20Connect%204%20using%20Monte%20Carlo%20Tree%20Search%20https://pranaval.github.io/project/example/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https://pranaval.github.io/project/example/&amp;title=Game%20AI:%20Learning%20to%20play%20Connect%204%20using%20Monte%20Carlo%20Tree%20Search" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <a href="https://pranaval.github.io/"><img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_hu280853e2b9442d3e27c971b71d5d8f4d_240558_270x270_fill_q75_lanczos_center.jpg" alt="Pranav Agarwal"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://pranaval.github.io/">Pranav Agarwal</a></h5>
+      <h6 class="card-subtitle">Research Intern</h6>
+      
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/Pranav_AL" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://scholar.google.com/citations?user=QFEzapMAAAAJ&amp;hl=en" target="_blank" rel="noopener">
+        <i class="fas fa-graduation-cap"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/pranavAL" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.linkedin.com/in/pranav-agarwal-6b4453114/" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/media/Curriculum_Vitae.pdf" >
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+<section id="comments">
+  
+</section>
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+    <div class="project-related-pages content-widget-hr">
+      
+      
+
+      
+      
+      
+
+      
+      
+      
+
+      
+      
+      
+    </div>
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+  </p>
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+    Published with
+    <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a>  —
+    the free, <a href="https://github.com/wowchemy/wowchemy-hugo-modules" target="_blank" rel="noopener">
+    open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+      
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.1.0/instantpage.min.js" integrity="sha512-1+qUtKoh9XZW7j+6LhRMAyOrgSQKenQ4mluTR+cvxXjP1Z54RxZuzstR/H9kgPXQsVB8IW7DMDFUJpzLjvhGSQ==" crossorigin="anonymous"></script>
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.8.0/mermaid.min.js" integrity="sha512-ja+hSBi4JDtjSqc4LTBsSwuBT3tdZ3oKYKd07lTVYmCnTCor56AnRql00ssqnTOR9Ss4gOP/ROGB3SfcJnZkeg==" crossorigin="anonymous" title="mermaid"></script>
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js" integrity="sha512-TDKKr+IvoqZnPzc3l35hdjpHD0m+b2EC2SrLEgKDRWpxf2rFCxemkgvJ5kfU48ip+Y+m2XVKyOCD85ybtlZDmw==" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/r.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js" integrity="sha512-SeiQaaDh73yrb56sTW/RgVdi/mMqNeM2oBwubFHagc5BkixSpP1fvqF47mKzPGWYSSy4RwbBunrJBQ4Co8fRWA==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks",
+        'slides' : "Slides"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/wowchemy.min.76130252bc8c287b25144aa7a54dcd1f.js"></script>
+
+    
+
+
+
+
+
+
+</body>
+</html>

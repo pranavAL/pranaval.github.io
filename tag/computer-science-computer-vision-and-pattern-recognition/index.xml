@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>&#34;Computer Science - Computer Vision and Pattern Recognition&#34; | Pranav Agarwal</title>
+    <link>https://pranaval.github.io/tag/computer-science-computer-vision-and-pattern-recognition/</link>
+      <atom:link href="https://pranaval.github.io/tag/computer-science-computer-vision-and-pattern-recognition/index.xml" rel="self" type="application/rss+xml" />
+    <description>&#34;Computer Science - Computer Vision and Pattern Recognition&#34;</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sun, 01 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://pranaval.github.io/images/icon_hu2a925f5c00d128def27a1ee15bbb14f6_4283_512x512_fill_lanczos_center_2.png</url>
+      <title>&#34;Computer Science - Computer Vision and Pattern Recognition&#34;</title>
+      <link>https://pranaval.github.io/tag/computer-science-computer-vision-and-pattern-recognition/</link>
+    </image>
+    
+    <item>
+      <title>Egoshots, an ego-vision life-logging dataset and semantic fidelity metric to evaluate diversity in image captioning models</title>
+      <link>https://pranaval.github.io/publication/agarwal-egoshots-2020/</link>
+      <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>https://pranaval.github.io/publication/agarwal-egoshots-2020/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

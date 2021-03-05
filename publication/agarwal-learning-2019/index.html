@@ -1,0 +1,1178 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  
+  
+  <meta name="generator" content="Wowchemy 5.0.0-beta.1 for Hugo">
+  
+
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Pranav Agarwal">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Cross-Modal biometric matching has been a scarcely explored field but carries several important applications and aims to further secure the currently existing security systems. In this paper, a framework for cross-modal biometric matching is presented, where faces of an individual are generated using his/her voice clips and further the synthesized faces are tested using a face classification network. Generative Adversarial Network (GAN) has become a recent trend in deep learning and has been widely used for image synthesis. We explore the advancements of Convolutional Neural Network (CNN) for feature extraction and generative networks for image synthesis. In the experiment, we compare the performance of Variational Autoencoders(VAE), Conditional Generative Adversarial Networks(C-GAN) and Regularized Conditional Generative Adversarial Networks(RC-GAN) and show that RC-GAN that is C-GAN with a regularization factor added to its loss is able to generate faces corresponding to the true identity of the voice clips with the best accuracy of 84.52% while VAE generates a less noise prone image with the highest PSNR of 28.276 decibels but with an accuracy of 72.61%.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://pranaval.github.io/publication/agarwal-learning-2019/">
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#3f51b5">
+  
+
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.0/css/academicons.min.css" integrity="sha512-W4yqoT1+8NLkinBLBZko+dFB2ZbHsYLDdr50VElllRcNt2Q4/GSs6u71UHKxB7S6JEMCp5Ve4xjh3eGQl/HRvg==" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js" integrity="sha512-TmDwFLhg3UA4ZG0Eb4MIyT1O1Mb+Oww5kFG0uHqXsdbyZz9DcvYQhKpGgNkamAI6h2lGGZq2X8ftOJvF/XjTUg==" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+    
+      
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather%7CRoboto+Mono&display=swap">
+    
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.min.ba60aaa7335167225281220fc2aad2c8.css">
+
+  
+
+
+
+
+  
+
+  
+
+
+  
+  
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu2a925f5c00d128def27a1ee15bbb14f6_4283_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu2a925f5c00d128def27a1ee15bbb14f6_4283_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="https://pranaval.github.io/publication/agarwal-learning-2019/">
+
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="og:site_name" content="Pranav Agarwal">
+  <meta property="og:url" content="https://pranaval.github.io/publication/agarwal-learning-2019/">
+  <meta property="og:title" content="Learning to synthesize faces using voice clips for Cross-Modal biometric matching | Pranav Agarwal">
+  <meta property="og:description" content="Cross-Modal biometric matching has been a scarcely explored field but carries several important applications and aims to further secure the currently existing security systems. In this paper, a framework for cross-modal biometric matching is presented, where faces of an individual are generated using his/her voice clips and further the synthesized faces are tested using a face classification network. Generative Adversarial Network (GAN) has become a recent trend in deep learning and has been widely used for image synthesis. We explore the advancements of Convolutional Neural Network (CNN) for feature extraction and generative networks for image synthesis. In the experiment, we compare the performance of Variational Autoencoders(VAE), Conditional Generative Adversarial Networks(C-GAN) and Regularized Conditional Generative Adversarial Networks(RC-GAN) and show that RC-GAN that is C-GAN with a regularization factor added to its loss is able to generate faces corresponding to the true identity of the voice clips with the best accuracy of 84.52% while VAE generates a less noise prone image with the highest PSNR of 28.276 decibels but with an accuracy of 72.61%."><meta property="og:image" content="https://pranaval.github.io/publication/agarwal-learning-2019/featured.png">
+  <meta property="twitter:image" content="https://pranaval.github.io/publication/agarwal-learning-2019/featured.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2020-12-21T10:34:01&#43;00:00">
+    
+    <meta property="article:modified_time" content="2020-12-21T16:04:01&#43;05:30">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://pranaval.github.io/publication/agarwal-learning-2019/"
+  },
+  "headline": "Learning to synthesize faces using voice clips for Cross-Modal biometric matching",
+  
+  "image": [
+    "https://pranaval.github.io/publication/agarwal-learning-2019/featured.png"
+  ],
+  
+  "datePublished": "2020-12-21T10:34:01Z",
+  "dateModified": "2020-12-21T16:04:01+05:30",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Pranav Agarwal"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Pranav Agarwal",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://pranaval.github.io/images/icon_hu2a925f5c00d128def27a1ee15bbb14f6_4283_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "Cross-Modal biometric matching has been a scarcely explored field but carries several important applications and aims to further secure the currently existing security systems. In this paper, a framework for cross-modal biometric matching is presented, where faces of an individual are generated using his/her voice clips and further the synthesized faces are tested using a face classification network. Generative Adversarial Network (GAN) has become a recent trend in deep learning and has been widely used for image synthesis. We explore the advancements of Convolutional Neural Network (CNN) for feature extraction and generative networks for image synthesis. In the experiment, we compare the performance of Variational Autoencoders(VAE), Conditional Generative Adversarial Networks(C-GAN) and Regularized Conditional Generative Adversarial Networks(RC-GAN) and show that RC-GAN that is C-GAN with a regularization factor added to its loss is able to generate faces corresponding to the true identity of the voice clips with the best accuracy of 84.52% while VAE generates a less noise prone image with the highest PSNR of 28.276 decibels but with an accuracy of 72.61%."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Learning to synthesize faces using voice clips for Cross-Modal biometric matching | Pranav Agarwal</title>
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper  ">
+
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.js"></script>
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  <div class="page-header">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Pranav Agarwal</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Pranav Agarwal</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-end" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>Home</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#publications"><span>Publications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#blogs"><span>Blogs</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      
+
+      
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  </div>
+
+  <div class="page-body">
+    
+
+
+
+
+
+
+
+
+<div class="pub">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<div class="article-container pt-3">
+  <h1>Learning to synthesize faces using voice clips for Cross-Modal biometric matching</h1>
+
+  
+
+  
+
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+  <span >
+      Pranav Agarwal</span>, <span >
+      Soumyajit Poddar</span>, <span >
+      Anakhi Hazarika</span>, <span >
+      Hafizur Rahaman</span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    June 2019
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+  
+  
+
+  
+  
+
+</div>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<div class="btn-links mb-3">
+  
+  
+
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+<a class="btn btn-outline-primary my-1 mr-1" href="/media/TENSYMP_2019_paper_176.pdf" target="_blank" rel="noopener">
+  PDF
+</a>
+
+
+
+<button type="button" class="btn btn-outline-primary my-1 mr-1 js-cite-modal"
+        data-filename="/publication/agarwal-learning-2019/cite.bib">
+  Cite
+</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a class="btn btn-outline-primary my-1 mr-1" href="https://doi.org/10.1109/TENSYMP46218.2019.8971330" target="_blank" rel="noopener">
+  DOI
+</a>
+
+
+
+</div>
+
+
+</div>
+
+
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 660px; max-height: 285px;">
+  <div style="position: relative">
+    <img src="/publication/agarwal-learning-2019/featured.png" alt="" class="featured-image">
+    
+  </div>
+</div>
+
+
+
+  <div class="article-container">
+
+    
+    <h3>Abstract</h3>
+    <p class="pub-abstract">Cross-Modal biometric matching has been a scarcely explored field but carries several important applications and aims to further secure the currently existing security systems. In this paper, a framework for cross-modal biometric matching is presented, where faces of an individual are generated using his/her voice clips and further the synthesized faces are tested using a face classification network. Generative Adversarial Network (GAN) has become a recent trend in deep learning and has been widely used for image synthesis. We explore the advancements of Convolutional Neural Network (CNN) for feature extraction and generative networks for image synthesis. In the experiment, we compare the performance of Variational Autoencoders(VAE), Conditional Generative Adversarial Networks(C-GAN) and Regularized Conditional Generative Adversarial Networks(RC-GAN) and show that RC-GAN that is C-GAN with a regularization factor added to its loss is able to generate faces corresponding to the true identity of the voice clips with the best accuracy of 84.52% while VAE generates a less noise prone image with the highest PSNR of 28.276 decibels but with an accuracy of 72.61%.</p>
+    
+
+    
+    
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-10">
+        <div class="row">
+          <div class="col-12 col-md-3 pub-row-heading">Type</div>
+          <div class="col-12 col-md-9">
+            <a href="/publication/#1">
+              Conference paper
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+    <div class="d-md-none space-below"></div>
+    
+
+    
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-10">
+        <div class="row">
+          <div class="col-12 col-md-3 pub-row-heading">Publication</div>
+          <div class="col-12 col-md-9">2019 IEEE Region 10 Symposium (TENSYMP)</div>
+        </div>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+    <div class="d-md-none space-below"></div>
+    
+
+    <div class="space-below"></div>
+
+    <div class="article-style"></div>
+
+    
+
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tag/biometric-matching/">&#34;Biometric matching&#34;</a>
+  
+  <a class="badge badge-light" href="/tag/cnn/">&#34;CNN&#34;</a>
+  
+  <a class="badge badge-light" href="/tag/generative-adversarial-network/">&#34;Generative Adversarial Network&#34;</a>
+  
+  <a class="badge badge-light" href="/tag/rc-gan/">&#34;RC-GAN&#34;</a>
+  
+  <a class="badge badge-light" href="/tag/vae/">&#34;VAE&#34;</a>
+  
+  <a class="badge badge-light" href="/tag/biometrics-access-control/">&#34;biometrics (access control)&#34;</a>
+  
+  <a class="badge badge-light" href="/tag/convolutional-neural-nets/">&#34;convolutional neural nets&#34;</a>
+  
+  <a class="badge badge-light" href="/tag/convolutional-neural-network/">&#34;convolutional neural network&#34;</a>
+  
+  <a class="badge badge-light" href="/tag/cross-modal-biometric-matching/">&#34;cross-modal biometric matching&#34;</a>
+  
+  <a class="badge badge-light" href="/tag/deep-learning/">Deep Learning</a>
+  
+  <a class="badge badge-light" href="/tag/face-classification-network/">&#34;face classification network&#34;</a>
+  
+  <a class="badge badge-light" href="/tag/face-recognition/">&#34;face recognition&#34;</a>
+  
+  <a class="badge badge-light" href="/tag/feature-extraction/">&#34;feature extraction&#34;</a>
+  
+  <a class="badge badge-light" href="/tag/image-classification/">&#34;image classification&#34;</a>
+  
+  <a class="badge badge-light" href="/tag/image-matching/">&#34;image matching&#34;</a>
+  
+  <a class="badge badge-light" href="/tag/image-synthesis/">&#34;image synthesis&#34;</a>
+  
+  <a class="badge badge-light" href="/tag/learning-artificial-intelligence/">&#34;learning (artificial intelligence)&#34;</a>
+  
+  <a class="badge badge-light" href="/tag/regularized-conditional-generative-adversarial-networks/">&#34;regularized conditional generative adversarial networks&#34;</a>
+  
+  <a class="badge badge-light" href="/tag/speech-recognition/">&#34;speech recognition&#34;</a>
+  
+  <a class="badge badge-light" href="/tag/variational-autoencoders/">&#34;variational autoencoders&#34;</a>
+  
+  <a class="badge badge-light" href="/tag/voice-clips/">&#34;voice clips&#34;</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://pranaval.github.io/publication/agarwal-learning-2019/&amp;text=Learning%20to%20synthesize%20faces%20using%20voice%20clips%20for%20Cross-Modal%20biometric%20matching" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://pranaval.github.io/publication/agarwal-learning-2019/&amp;t=Learning%20to%20synthesize%20faces%20using%20voice%20clips%20for%20Cross-Modal%20biometric%20matching" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Learning%20to%20synthesize%20faces%20using%20voice%20clips%20for%20Cross-Modal%20biometric%20matching&amp;body=https://pranaval.github.io/publication/agarwal-learning-2019/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://pranaval.github.io/publication/agarwal-learning-2019/&amp;title=Learning%20to%20synthesize%20faces%20using%20voice%20clips%20for%20Cross-Modal%20biometric%20matching" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=Learning%20to%20synthesize%20faces%20using%20voice%20clips%20for%20Cross-Modal%20biometric%20matching%20https://pranaval.github.io/publication/agarwal-learning-2019/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https://pranaval.github.io/publication/agarwal-learning-2019/&amp;title=Learning%20to%20synthesize%20faces%20using%20voice%20clips%20for%20Cross-Modal%20biometric%20matching" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+
+
+
+
+  
+    
+
+
+
+
+  
+    
+
+
+
+
+  
+    
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <div class="article-widget content-widget-hr">
+    <h3>Related</h3>
+    <ul>
+      
+      <li><a href="/publication/agarwal-egoshots-2020/">Egoshots, an ego-vision life-logging dataset and semantic fidelity metric to evaluate diversity in image captioning models</a></li>
+      
+    </ul>
+  </div>
+  
+
+
+
+
+
+  </div>
+</div>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+  </p>
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+    Published with
+    <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a>  —
+    the free, <a href="https://github.com/wowchemy/wowchemy-hugo-modules" target="_blank" rel="noopener">
+    open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+      
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.1.0/instantpage.min.js" integrity="sha512-1+qUtKoh9XZW7j+6LhRMAyOrgSQKenQ4mluTR+cvxXjP1Z54RxZuzstR/H9kgPXQsVB8IW7DMDFUJpzLjvhGSQ==" crossorigin="anonymous"></script>
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.8.0/mermaid.min.js" integrity="sha512-ja+hSBi4JDtjSqc4LTBsSwuBT3tdZ3oKYKd07lTVYmCnTCor56AnRql00ssqnTOR9Ss4gOP/ROGB3SfcJnZkeg==" crossorigin="anonymous" title="mermaid"></script>
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js" integrity="sha512-TDKKr+IvoqZnPzc3l35hdjpHD0m+b2EC2SrLEgKDRWpxf2rFCxemkgvJ5kfU48ip+Y+m2XVKyOCD85ybtlZDmw==" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/r.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js" integrity="sha512-SeiQaaDh73yrb56sTW/RgVdi/mMqNeM2oBwubFHagc5BkixSpP1fvqF47mKzPGWYSSy4RwbBunrJBQ4Co8fRWA==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks",
+        'slides' : "Slides"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/wowchemy.min.76130252bc8c287b25144aa7a54dcd1f.js"></script>
+
+    
+
+
+
+
+
+
+</body>
+</html>

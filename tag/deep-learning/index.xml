@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Deep Learning | Pranav Agarwal</title>
+    <link>https://pranaval.github.io/tag/deep-learning/</link>
+      <atom:link href="https://pranaval.github.io/tag/deep-learning/index.xml" rel="self" type="application/rss+xml" />
+    <description>Deep Learning</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sun, 01 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://pranaval.github.io/images/icon_hu2a925f5c00d128def27a1ee15bbb14f6_4283_512x512_fill_lanczos_center_2.png</url>
+      <title>Deep Learning</title>
+      <link>https://pranaval.github.io/tag/deep-learning/</link>
+    </image>
+    
+    <item>
+      <title>Game AI: Learning to play Connect 4 using Monte Carlo Tree Search</title>
+      <link>https://pranaval.github.io/project/example/</link>
+      <pubDate>Sun, 01 Nov 2020 00:00:00 +0000</pubDate>
+      <guid>https://pranaval.github.io/project/example/</guid>
+      <description>&lt;h2 id=&#34;game-ai&#34;&gt;&lt;strong&gt;Game AI&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;Game AI is one of the most promising research areas which involves teaching an AI agent to learn to play a complex game. Recently there have been many exciting works like &lt;a href=&#34;https://deepmind.com/research/case-studies/alphago-the-story-so-far&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;AlphaGO&lt;/a&gt; by DeepMind and &lt;a href=&#34;https://www.vox.com/future-perfect/2019/9/20/20872672/ai-learn-play-hide-and-seek&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;learning to play Hide and Seek by OpenAI&lt;/a&gt;. The game environment provides many complex scenarios to test several algorithms which can then be adapted to real-life important applications like autonomous driving and robotics.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;1.gif&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;In this article find my approach to let an AI agent learn to play Connect 4. Though simple for humans, large action space and several permutations and combinations of different board states prove to be challenging for an AI agent to learn to win. I used a Monte Carlo Tree Search approach to solve this problem and I am happy to share that I landed up in the top 30% among all the participants (my first Kaggle competition).&lt;/p&gt;
+&lt;h2 id=&#34;about-connect-4&#34;&gt;&lt;strong&gt;About Connect 4&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;Connect 4&lt;/em&gt; is a turn-based game where two players drop colored discs into a vertical grid alternatively. The aim of each player is to form a &lt;strong&gt;sequence of four discs&lt;/strong&gt; in a row before its opponent. This is a &lt;strong&gt;perfect information game&lt;/strong&gt;, meaning each player is well informed of all the events that have previously occurred.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;3.gif&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Alternatively, Connect 4 can also be considered as a &lt;strong&gt;zero-sum&lt;/strong&gt; game meaning there is no mutual win or loss.&lt;/p&gt;
+&lt;h2 id=&#34;kaggle-environment-to-load-connectx&#34;&gt;&lt;strong&gt;Kaggle environment to load ConnectX&lt;/strong&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Kaggle provides an amazingly easy to use OpenAI like gym environment for the Connect 4 game.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;In order to final test your agent, you can also use predefined &lt;strong&gt;random&lt;/strong&gt; and &lt;strong&gt;negamax&lt;/strong&gt; agents.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;different-approach-to-solve-the-problem&#34;&gt;&lt;strong&gt;Different Approach to solve the problem&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;There can be many different algorithms to solve this problem like&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Minimax&lt;/li&gt;
+&lt;li&gt;Minimax with alpha-beta pruning&lt;/li&gt;
+&lt;li&gt;Q Learning&lt;/li&gt;
+&lt;li&gt;Proximal Policy Algorithm&lt;/li&gt;
+&lt;li&gt;Monte Carlo Tree Search&lt;/li&gt;
+&lt;li&gt;and many more&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I preferred using the Monte Carlo Tree Search algorithm because of its flexibility to solve games with large branching factors. The main bottleneck for games involving large action space (7 in case of connect4) is that requires it requires an extensive search considering the different permutation and combination of the given board. MCTS tries to overcome this problem in an efficient way as explained below by reducing the search space while at the same time maintaining efficiency.&lt;/p&gt;
+&lt;h2 id=&#34;monte-carlo-tree-search-theory&#34;&gt;&lt;strong&gt;Monte Carlo Tree Search: Theory&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Idea&lt;/strong&gt;: Monte Carlo Tree Search builds a search tree with n nodes with each node annotated with the &lt;strong&gt;win count&lt;/strong&gt; and the &lt;strong&gt;visit count&lt;/strong&gt;. Initially, the tree starts with a single root node and performs iterations as long as resources are not exhausted.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Initial Setup&lt;/strong&gt; — Start with a single root (parent) node and assign a large random UCB value to each non visited (child) nodes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;MCTS consists of four main steps&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;4.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Selection&lt;/strong&gt; — In this phase, the agent starts at the root node, selects the most urgent node, apply the chosen actions, and continue till the terminal state is reached. To select the most urgent node upper confidence bound of the nodes is used. The node with the maximum UCB is used as the next node. The UCB process helps overcome &lt;strong&gt;exploration&lt;/strong&gt; and &lt;strong&gt;exploitation&lt;/strong&gt; dilemma. Also well known as a Multi-Armed bandit problem where the agent wants to maximize one’s gains while playing (Lifelong Learning).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;5.png&#34; alt=&#34;&#34;&gt;
+&lt;img src=&#34;6.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Expansion&lt;/strong&gt; — When UCB can no longer be applied to find the next node, the game tree is expanded further to include an unexplored child by appending all possible nodes from the leaf node&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Simulation&lt;/strong&gt; — Once expanded the algorithm selects the child node either randomly or with a policy until it reaches the final stage of the game&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Backpropagation&lt;/strong&gt; — When the agent reaches the final state of the game with a winner, all the traversed nodes are updated. The visit and win score for each node is updated.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The above steps are repeated for some iterations.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Finally, the child of the root node with the highest number of visits is selected as the next action as more the number of visits higher is the UCB.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;mcts-summary&#34;&gt;&lt;strong&gt;MCTS Summary&lt;/strong&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Each iteration starts at the root.&lt;/li&gt;
+&lt;li&gt;Follows tree policy to reach a leaf node.&lt;/li&gt;
+&lt;li&gt;Node N is added.&lt;/li&gt;
+&lt;li&gt;Perform a random rollout.&lt;/li&gt;
+&lt;li&gt;Value backpropagated up the tree.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;other-common-approaches&#34;&gt;&lt;strong&gt;Other common approaches&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;Another common approach Minimax with alpha-beta pruning.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Idea&lt;/strong&gt; — If beta’s (minimizing player) maximum score becomes less than the minimum score of the maximizing player(alpha), the maximizing player is not required to consider other nodes.&lt;/p&gt;
+&lt;p&gt;Works well only when:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A good heuristic value function is known&lt;/li&gt;
+&lt;li&gt;The branching factor is modest.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;implement-mcts-to-play-connect-4&#34;&gt;&lt;strong&gt;Implement MCTS to play Connect 4&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;Check out my implementation of Monte Carlo Tree Search to play Connect 4 to rank in the top 30% of this &lt;a href=&#34;https://www.kaggle.com/c/connectx&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Kaggle Competition&lt;/a&gt; in this &lt;a href=&#34;https://colab.research.google.com/drive/1b6ikDpfggh_QeIKtDoqt-4DtJc0eeLk2?usp=sharing&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Colab Notebook&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;2.gif&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Learning to synthesize faces using voice clips for Cross-Modal biometric matching</title>
+      <link>https://pranaval.github.io/publication/agarwal-learning-2019/</link>
+      <pubDate>Sat, 01 Jun 2019 00:00:00 +0000</pubDate>
+      <guid>https://pranaval.github.io/publication/agarwal-learning-2019/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

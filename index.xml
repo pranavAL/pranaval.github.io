@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pranav Agarwal</title>
+    <link>https://pranaval.github.io/</link>
+      <atom:link href="https://pranaval.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <description>Pranav Agarwal</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sun, 01 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://pranaval.github.io/images/icon_hu2a925f5c00d128def27a1ee15bbb14f6_4283_512x512_fill_lanczos_center_2.png</url>
+      <title>Pranav Agarwal</title>
+      <link>https://pranaval.github.io/</link>
+    </image>
+    
+    <item>
+      <title>Game AI: Learning to play Connect 4 using Monte Carlo Tree Search</title>
+      <link>https://pranaval.github.io/project/example/</link>
+      <pubDate>Sun, 01 Nov 2020 00:00:00 +0000</pubDate>
+      <guid>https://pranaval.github.io/project/example/</guid>
+      <description>&lt;h2 id=&#34;game-ai&#34;&gt;&lt;strong&gt;Game AI&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;Game AI is one of the most promising research areas which involves teaching an AI agent to learn to play a complex game. Recently there have been many exciting works like &lt;a href=&#34;https://deepmind.com/research/case-studies/alphago-the-story-so-far&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;AlphaGO&lt;/a&gt; by DeepMind and &lt;a href=&#34;https://www.vox.com/future-perfect/2019/9/20/20872672/ai-learn-play-hide-and-seek&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;learning to play Hide and Seek by OpenAI&lt;/a&gt;. The game environment provides many complex scenarios to test several algorithms which can then be adapted to real-life important applications like autonomous driving and robotics.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;1.gif&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;In this article find my approach to let an AI agent learn to play Connect 4. Though simple for humans, large action space and several permutations and combinations of different board states prove to be challenging for an AI agent to learn to win. I used a Monte Carlo Tree Search approach to solve this problem and I am happy to share that I landed up in the top 30% among all the participants (my first Kaggle competition).&lt;/p&gt;
+&lt;h2 id=&#34;about-connect-4&#34;&gt;&lt;strong&gt;About Connect 4&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;Connect 4&lt;/em&gt; is a turn-based game where two players drop colored discs into a vertical grid alternatively. The aim of each player is to form a &lt;strong&gt;sequence of four discs&lt;/strong&gt; in a row before its opponent. This is a &lt;strong&gt;perfect information game&lt;/strong&gt;, meaning each player is well informed of all the events that have previously occurred.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;3.gif&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Alternatively, Connect 4 can also be considered as a &lt;strong&gt;zero-sum&lt;/strong&gt; game meaning there is no mutual win or loss.&lt;/p&gt;
+&lt;h2 id=&#34;kaggle-environment-to-load-connectx&#34;&gt;&lt;strong&gt;Kaggle environment to load ConnectX&lt;/strong&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Kaggle provides an amazingly easy to use OpenAI like gym environment for the Connect 4 game.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;In order to final test your agent, you can also use predefined &lt;strong&gt;random&lt;/strong&gt; and &lt;strong&gt;negamax&lt;/strong&gt; agents.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;different-approach-to-solve-the-problem&#34;&gt;&lt;strong&gt;Different Approach to solve the problem&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;There can be many different algorithms to solve this problem like&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Minimax&lt;/li&gt;
+&lt;li&gt;Minimax with alpha-beta pruning&lt;/li&gt;
+&lt;li&gt;Q Learning&lt;/li&gt;
+&lt;li&gt;Proximal Policy Algorithm&lt;/li&gt;
+&lt;li&gt;Monte Carlo Tree Search&lt;/li&gt;
+&lt;li&gt;and many more&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I preferred using the Monte Carlo Tree Search algorithm because of its flexibility to solve games with large branching factors. The main bottleneck for games involving large action space (7 in case of connect4) is that requires it requires an extensive search considering the different permutation and combination of the given board. MCTS tries to overcome this problem in an efficient way as explained below by reducing the search space while at the same time maintaining efficiency.&lt;/p&gt;
+&lt;h2 id=&#34;monte-carlo-tree-search-theory&#34;&gt;&lt;strong&gt;Monte Carlo Tree Search: Theory&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Idea&lt;/strong&gt;: Monte Carlo Tree Search builds a search tree with n nodes with each node annotated with the &lt;strong&gt;win count&lt;/strong&gt; and the &lt;strong&gt;visit count&lt;/strong&gt;. Initially, the tree starts with a single root node and performs iterations as long as resources are not exhausted.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Initial Setup&lt;/strong&gt; — Start with a single root (parent) node and assign a large random UCB value to each non visited (child) nodes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;MCTS consists of four main steps&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;4.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Selection&lt;/strong&gt; — In this phase, the agent starts at the root node, selects the most urgent node, apply the chosen actions, and continue till the terminal state is reached. To select the most urgent node upper confidence bound of the nodes is used. The node with the maximum UCB is used as the next node. The UCB process helps overcome &lt;strong&gt;exploration&lt;/strong&gt; and &lt;strong&gt;exploitation&lt;/strong&gt; dilemma. Also well known as a Multi-Armed bandit problem where the agent wants to maximize one’s gains while playing (Lifelong Learning).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;5.png&#34; alt=&#34;&#34;&gt;
+&lt;img src=&#34;6.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Expansion&lt;/strong&gt; — When UCB can no longer be applied to find the next node, the game tree is expanded further to include an unexplored child by appending all possible nodes from the leaf node&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Simulation&lt;/strong&gt; — Once expanded the algorithm selects the child node either randomly or with a policy until it reaches the final stage of the game&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Backpropagation&lt;/strong&gt; — When the agent reaches the final state of the game with a winner, all the traversed nodes are updated. The visit and win score for each node is updated.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The above steps are repeated for some iterations.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Finally, the child of the root node with the highest number of visits is selected as the next action as more the number of visits higher is the UCB.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;mcts-summary&#34;&gt;&lt;strong&gt;MCTS Summary&lt;/strong&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Each iteration starts at the root.&lt;/li&gt;
+&lt;li&gt;Follows tree policy to reach a leaf node.&lt;/li&gt;
+&lt;li&gt;Node N is added.&lt;/li&gt;
+&lt;li&gt;Perform a random rollout.&lt;/li&gt;
+&lt;li&gt;Value backpropagated up the tree.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;other-common-approaches&#34;&gt;&lt;strong&gt;Other common approaches&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;Another common approach Minimax with alpha-beta pruning.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Idea&lt;/strong&gt; — If beta’s (minimizing player) maximum score becomes less than the minimum score of the maximizing player(alpha), the maximizing player is not required to consider other nodes.&lt;/p&gt;
+&lt;p&gt;Works well only when:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A good heuristic value function is known&lt;/li&gt;
+&lt;li&gt;The branching factor is modest.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;implement-mcts-to-play-connect-4&#34;&gt;&lt;strong&gt;Implement MCTS to play Connect 4&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;Check out my implementation of Monte Carlo Tree Search to play Connect 4 to rank in the top 30% of this &lt;a href=&#34;https://www.kaggle.com/c/connectx&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Kaggle Competition&lt;/a&gt; in this &lt;a href=&#34;https://colab.research.google.com/drive/1b6ikDpfggh_QeIKtDoqt-4DtJc0eeLk2?usp=sharing&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Colab Notebook&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;2.gif&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Egoshots, an ego-vision life-logging dataset and semantic fidelity metric to evaluate diversity in image captioning models</title>
+      <link>https://pranaval.github.io/publication/agarwal-egoshots-2020/</link>
+      <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>https://pranaval.github.io/publication/agarwal-egoshots-2020/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Learning to synthesize faces using voice clips for Cross-Modal biometric matching</title>
+      <link>https://pranaval.github.io/publication/agarwal-learning-2019/</link>
+      <pubDate>Sat, 01 Jun 2019 00:00:00 +0000</pubDate>
+      <guid>https://pranaval.github.io/publication/agarwal-learning-2019/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Welcome to Wowchemy, the website builder for Hugo</title>
+      <link>https://pranaval.github.io/post/getting-started/</link>
+      <pubDate>Wed, 20 Apr 2016 00:00:00 +0000</pubDate>
+      <guid>https://pranaval.github.io/post/getting-started/</guid>
+      <description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;The Wowchemy website builder for Hugo, along with its starter templates, is designed for professional creators, educators, and teams/organizations - although it can be used to create any kind of site&lt;/li&gt;
+&lt;li&gt;The template can be modified and customised to suit your needs. It&amp;rsquo;s a good platform for anyone looking to take control of their data and online identity whilst having the convenience to start off with a &lt;strong&gt;no-code solution (write in Markdown and customize with YAML parameters)&lt;/strong&gt; and having &lt;strong&gt;flexibility to later add even deeper personalization with HTML and CSS&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;You can work with all your favourite tools and apps with hundreds of plugins and integrations to speed up your workflows, interact with your readers, and much more&lt;/li&gt;
+&lt;/ol&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure id=&#34;figure-the-template-is-mobile-first-with-a-responsive-design-to-ensure-that-your-site-looks-stunning-on-every-device&#34;&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://raw.githubusercontent.com/wowchemy/wowchemy-hugo-modules/master/academic.png&#34; data-caption=&#34;The template is mobile first with a responsive design to ensure that your site looks stunning on every device.&#34;&gt;
+
+
+  &lt;img src=&#34;https://raw.githubusercontent.com/wowchemy/wowchemy-hugo-modules/master/academic.png&#34; alt=&#34;&#34;  &gt;
+&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    The template is mobile first with a responsive design to ensure that your site looks stunning on every device.
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+
+&lt;h2 id=&#34;get-started&#34;&gt;Get Started&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;👉 &lt;a href=&#34;https://wowchemy.com/templates/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;strong&gt;Create a new site&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📚 &lt;a href=&#34;https://wowchemy.com/docs/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;strong&gt;Personalize your site&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;💬 &lt;a href=&#34;https://discord.gg/z8wNYzb&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Chat with the &lt;strong&gt;Wowchemy community&lt;/strong&gt;&lt;/a&gt; or &lt;a href=&#34;https://discourse.gohugo.io&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;strong&gt;Hugo community&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🐦 Twitter: &lt;a href=&#34;https://twitter.com/wowchemy&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;@wowchemy&lt;/a&gt; &lt;a href=&#34;https://twitter.com/GeorgeCushen&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;@GeorgeCushen&lt;/a&gt; &lt;a href=&#34;https://twitter.com/search?q=%28%23MadeWithWowchemy%20OR%20%23MadeWithAcademic%29&amp;amp;src=typed_query&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;#MadeWithWowchemy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;💡 &lt;a href=&#34;https://github.com/wowchemy/wowchemy-hugo-modules/issues&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Request a &lt;strong&gt;feature&lt;/strong&gt; or report a &lt;strong&gt;bug&lt;/strong&gt; for &lt;em&gt;Wowchemy&lt;/em&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;⬆️ &lt;strong&gt;Updating Wowchemy?&lt;/strong&gt; View the &lt;a href=&#34;https://wowchemy.com/docs/update/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Update Guide&lt;/a&gt; and &lt;a href=&#34;https://wowchemy.com/updates/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Release Notes&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;crowd-funded-open-source-software&#34;&gt;Crowd-funded open-source software&lt;/h2&gt;
+&lt;p&gt;To help us develop this template and software sustainably under the MIT license, we ask all individuals and businesses that use it to help support its ongoing maintenance and development via sponsorship.&lt;/p&gt;
+&lt;h3 id=&#34;-click-here-to-become-a-sponsor-and-help-support-wowchemys-future-httpswowchemycomplans&#34;&gt;&lt;a href=&#34;https://wowchemy.com/plans/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;❤️ Click here to become a sponsor and help support Wowchemy&amp;rsquo;s future ❤️&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;As a token of appreciation for sponsoring, you can &lt;strong&gt;unlock &lt;a href=&#34;https://wowchemy.com/plans/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;these&lt;/a&gt; awesome rewards and extra features 🦄✨&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;ecosystem&#34;&gt;Ecosystem&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;https://github.com/wowchemy/wowchemy-admin/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Wowchemy Admin&lt;/a&gt;:&lt;/strong&gt; An admin tool to automatically import publications from BibTeX&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;inspiration&#34;&gt;Inspiration&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://academic-demo.netlify.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Check out the latest &lt;strong&gt;demo&lt;/strong&gt;&lt;/a&gt; of what you&amp;rsquo;ll get in less than 10 minutes, or &lt;a href=&#34;https://wowchemy.com/user-stories/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;view the &lt;strong&gt;showcase&lt;/strong&gt;&lt;/a&gt; of personal, project, and business sites.&lt;/p&gt;
+&lt;h2 id=&#34;features&#34;&gt;Features&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Page builder&lt;/strong&gt; - Create &lt;em&gt;anything&lt;/em&gt; with &lt;a href=&#34;https://wowchemy.com/docs/page-builder/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;strong&gt;widgets&lt;/strong&gt;&lt;/a&gt; and &lt;a href=&#34;https://wowchemy.com/docs/writing-markdown-latex/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;strong&gt;elements&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Edit any type of content&lt;/strong&gt; - Blog posts, publications, talks, slides, projects, and more!&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Create content&lt;/strong&gt; in &lt;a href=&#34;https://wowchemy.com/docs/writing-markdown-latex/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;strong&gt;Markdown&lt;/strong&gt;&lt;/a&gt;, &lt;a href=&#34;https://wowchemy.com/docs/import/jupyter/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;strong&gt;Jupyter&lt;/strong&gt;&lt;/a&gt;, or &lt;a href=&#34;https://wowchemy.com/docs/install-locally/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;strong&gt;RStudio&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Plugin System&lt;/strong&gt; - Fully customizable &lt;a href=&#34;https://wowchemy.com/docs/customization/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;strong&gt;color&lt;/strong&gt; and &lt;strong&gt;font themes&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Display Code and Math&lt;/strong&gt; - Code highlighting and &lt;a href=&#34;https://en.wikibooks.org/wiki/LaTeX/Mathematics&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;LaTeX math&lt;/a&gt; supported&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Integrations&lt;/strong&gt; - &lt;a href=&#34;https://analytics.google.com&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Google Analytics&lt;/a&gt;, &lt;a href=&#34;https://disqus.com&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Disqus commenting&lt;/a&gt;, Maps, Contact Forms, and more!&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Beautiful Site&lt;/strong&gt; - Simple and refreshing one page design&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Industry-Leading SEO&lt;/strong&gt; - Help get your website found on search engines and social media&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Media Galleries&lt;/strong&gt; - Display your images and videos with captions in a customizable gallery&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Mobile Friendly&lt;/strong&gt; - Look amazing on every screen with a mobile friendly version of your site&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Multi-language&lt;/strong&gt; - 34+ language packs including English, 中文, and Português&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Multi-user&lt;/strong&gt; - Each author gets their own profile page&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Privacy Pack&lt;/strong&gt; - Assists with GDPR&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Stand Out&lt;/strong&gt; - Bring your site to life with animation, parallax backgrounds, and scroll effects&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;One-Click Deployment&lt;/strong&gt; - No servers. No databases. Only files.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;themes&#34;&gt;Themes&lt;/h2&gt;
+&lt;p&gt;Wowchemy and its templates come with &lt;strong&gt;automatic day (light) and night (dark) mode&lt;/strong&gt; built-in. Alternatively, visitors can choose their preferred mode - click the moon icon in the top right of the &lt;a href=&#34;https://academic-demo.netlify.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Demo&lt;/a&gt; to see it in action! Day/night mode can also be disabled by the site admin in &lt;code&gt;params.toml&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://wowchemy.com/docs/customization&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Choose a stunning &lt;strong&gt;theme&lt;/strong&gt; and &lt;strong&gt;font&lt;/strong&gt;&lt;/a&gt; for your site. Themes are fully customizable.&lt;/p&gt;
+&lt;h2 id=&#34;license&#34;&gt;License&lt;/h2&gt;
+&lt;p&gt;Copyright 2016-present &lt;a href=&#34;https://georgecushen.com&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;George Cushen&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Released under the &lt;a href=&#34;https://github.com/wowchemy/wowchemy-hugo-modules/blob/master/LICENSE.md&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MIT&lt;/a&gt; license.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
