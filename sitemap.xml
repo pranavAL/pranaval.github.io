@@ -3,30 +3,6 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://pranaval.github.io/home/about/</loc>
-  </url>
-  
-  <url>
-    <loc>https://pranaval.github.io/home/demo/</loc>
-  </url>
-  
-  <url>
-    <loc>https://pranaval.github.io/home/experience/</loc>
-  </url>
-  
-  <url>
-    <loc>https://pranaval.github.io/home/publications/</loc>
-  </url>
-  
-  <url>
-    <loc>https://pranaval.github.io/home/projects/</loc>
-  </url>
-  
-  <url>
-    <loc>https://pranaval.github.io/home/accomplishments/</loc>
-  </url>
-  
-  <url>
     <loc>https://pranaval.github.io/tag/deep-learning/</loc>
     <lastmod>2020-12-21T16:04:01+05:30</lastmod>
   </url>
@@ -284,10 +260,6 @@
   <url>
     <loc>https://pranaval.github.io/category/%E6%95%99%E7%A8%8B/</loc>
     <lastmod>2020-12-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://pranaval.github.io/home/</loc>
   </url>
   
 </urlset>
