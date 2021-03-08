@@ -14,9 +14,9 @@
     
     <item>
       <title>Game AI: Learning to play Connect 4 using Monte Carlo Tree Search</title>
-      <link>https://pranaval.github.io/project/example/</link>
+      <link>https://pranaval.github.io/project/blog_1/</link>
       <pubDate>Sun, 01 Nov 2020 00:00:00 +0000</pubDate>
-      <guid>https://pranaval.github.io/project/example/</guid>
+      <guid>https://pranaval.github.io/project/blog_1/</guid>
       <description>&lt;h2 id=&#34;game-ai&#34;&gt;&lt;strong&gt;Game AI&lt;/strong&gt;&lt;/h2&gt;
 &lt;p&gt;Game AI is one of the most promising research areas which involves teaching an AI agent to learn to play a complex game. Recently there have been many exciting works like &lt;a href=&#34;https://deepmind.com/research/case-studies/alphago-the-story-so-far&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;AlphaGO&lt;/a&gt; by DeepMind and &lt;a href=&#34;https://www.vox.com/future-perfect/2019/9/20/20872672/ai-learn-play-hide-and-seek&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;learning to play Hide and Seek by OpenAI&lt;/a&gt;. The game environment provides many complex scenarios to test several algorithms which can then be adapted to real-life important applications like autonomous driving and robotics.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;1.gif&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
