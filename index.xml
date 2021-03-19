@@ -5,12 +5,20 @@
     <link>https://pranaval.github.io/</link>
       <atom:link href="https://pranaval.github.io/index.xml" rel="self" type="application/rss+xml" />
     <description>Pranav Agarwal</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sun, 01 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 01 Mar 2021 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://pranaval.github.io/images/icon_hu2a925f5c00d128def27a1ee15bbb14f6_4283_512x512_fill_lanczos_center_2.png</url>
       <title>Pranav Agarwal</title>
       <link>https://pranaval.github.io/</link>
     </image>
+    
+    <item>
+      <title>Sparse Curriculum Reinforcement Learning for End-to-End Driving</title>
+      <link>https://pranaval.github.io/publication/agarwal-sparse-2021/</link>
+      <pubDate>Mon, 01 Mar 2021 00:00:00 +0000</pubDate>
+      <guid>https://pranaval.github.io/publication/agarwal-sparse-2021/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Game AI: Learning to play Connect 4 using Monte Carlo Tree Search</title>
